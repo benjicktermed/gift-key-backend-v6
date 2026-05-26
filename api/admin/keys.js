@@ -103,13 +103,9 @@ const kv = {
     return result ?? null;
   },
   async set(key, value) {
-    const res = await fetch(`${process.env.KV_REST_API_URL}/set/${encodeURIComponent(key)}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ value }),
+    const res = await fetch(`${process.env.KV_REST_API_URL}/set/${encodeURIComponent(key)}/${encodeURIComponent(value)}`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` },
     });
     return res.ok;
   },
