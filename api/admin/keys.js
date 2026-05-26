@@ -83,9 +83,14 @@ function generateKey() {
 }
 
 async function getKeyIndex() {
-  const raw = await kv.get("keys:index");
-  if (!raw) return [];
-  return typeof raw === "string" ? JSON.parse(raw) : raw;
+  try {
+    const raw = await kv.get("keys:index");
+    if (!raw) return [];
+    const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
 }
 
 const kv = {
